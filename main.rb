@@ -14,7 +14,9 @@ def help
 text = <<EOT
   NUMBER: \tShow 5 tweets older than the latest by $NUMBER
 
+  help, \\h: \tShow help, it's me!
   quit, \\q: \tQuit Beelzebub
+  fetch, \\f: \tFetch the latest tweets
 EOT
 puts text
 end
@@ -41,5 +43,7 @@ while true
   elsif command == 'quit' || command == '\q' || command == 'exit' || command == '\e'
     puts "\nGoodBye...\n\n"
     break
+  elsif command == 'fetch' || command == '\f'
+    fetch
   end
 end
