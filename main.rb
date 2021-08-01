@@ -24,7 +24,7 @@ def fetch_posts
   params = {}
   uri.query = URI.encode_www_form(params)
   res = Net::HTTP.get_response(uri)
-  return JSON.parse(res.body)
+  return JSON.parse(res.body).reverse
 end
 
 def fetch_users
@@ -42,7 +42,8 @@ end
 def help
 text = <<EOT
 
-  NUMBER: \tShow 5 posts older than the latest by $NUMBER
+  NUM: \tShow 5 posts older than the latest by $NUM
+  NUM1 NUM2: \tShow $NUM2 posts older than the latest by $NUM1
 
   help, \\h: \tShow help, it's me!
   quit, \\q: \tQuit Beelzebub
@@ -75,7 +76,7 @@ EOT
   puts post
 end
 
-def show_posts(posts, users, num, itr)
+def show_posts(posts, users, num = 0, itr = 5)
   for i in 0..itr - 1
     post = posts[num + i]
     begin
@@ -86,6 +87,7 @@ def show_posts(posts, users, num, itr)
     end
   end
 end
+
 
 
 
@@ -102,11 +104,16 @@ while true
 
   command = gets.chomp
 
-  if /(\d+)/ === command
-    num = Regexp.last_match[0].to_i
-    show_posts(posts, users, num, 5)
+  if /(\d+)\s+(\d+)/ === command
+    match = Regexp.last_match
+    num = match[1].to_i
+    itr = match[2].to_i
+    show_posts(posts, users, num, itr)
+  elsif /(\d+)/ === command
+    num = Regexp.last_match[1].to_i
+    show_posts(posts, users, num)
   elsif command == ''
-    show_posts(posts, users, 0, 5)
+    show_posts(posts, users)
   elsif command == 'help' || command == '\h'
     help
   elsif command == 'quit' || command == '\q' || command == 'exit' || command == '\e'
