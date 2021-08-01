@@ -8,6 +8,11 @@ uri.query = URI.encode_www_form(params)
 res = Net::HTTP.get_response(uri)
 hash = JSON.parse(res.body)
 
-for i in 0..6
-  pp hash[i]["text"]
+while true
+  puts 'Input the index of post desired... (Press Ctrl+C to quit)'
+  num = gets.chomp.to_i
+  for i in 0..4
+    pp hash[num + i]["text"]
+  end
+  puts "\n"
 end
