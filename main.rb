@@ -1,6 +1,6 @@
-require "./fetch.rb"
-require "./messages.rb"
-require "./show.rb"
+require "./lib/fetch.rb"
+require "./lib/messages.rb"
+require "./lib/show.rb"
 
 
 # =============================
