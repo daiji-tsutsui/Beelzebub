@@ -68,7 +68,7 @@ end
 def show_post(num, post, user)
 post = <<EOT
   #{num}: #{post["text"]}
-      By #{user["name"]}(#{user["_user_id"]})
+      By #{user["name"]}(#{user["_user_id"][0, 8]})
       Posted at #{post["_created_at"]}
 
 EOT
