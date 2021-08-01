@@ -2,7 +2,23 @@ require 'uri'
 require 'net/http'
 require 'json'
 
+def start
+logo = <<EOT
+
++=========================================+
+|                                         |
+|        B  E  E  L  Z  E  B  U  B        |
+|                                         |
++=========================================+
+ A simple viewer for 'SNS for Engineer'
+(see https://qiita.com/HawkClaws/items/599d7666f55e79ef7f56)
+
+EOT
+puts logo
+end
+
 def fetch
+  puts "Fetching posts...\n"
   uri = URI.parse("https://versatileapi.herokuapp.com/api/text/all")
   params = {}
   uri.query = URI.encode_www_form(params)
@@ -12,23 +28,24 @@ end
 
 def help
 text = <<EOT
-  NUMBER: \tShow 5 tweets older than the latest by $NUMBER
+
+  NUMBER: \tShow 5 posts older than the latest by $NUMBER
 
   help, \\h: \tShow help, it's me!
   quit, \\q: \tQuit Beelzebub
-  fetch, \\f: \tFetch the latest tweets
+  fetch, \\f: \tFetch the latest posts
 EOT
 puts text
 end
 
 
 
-
+start
 hash = fetch
 
 while true
   print "\n"
-  print 'Enter "help" or "\h" to display available commands...'
+  print 'Enter "help" or "\h" to display available commands'
   print "\n> "
 
   command = gets.chomp
@@ -36,7 +53,7 @@ while true
   if /(\d+)/ === command
     num = Regexp.last_match[0].to_i
     for i in 0..4
-      puts "  #{hash[num + i]["text"]}"
+      puts "  #{num + i}: #{hash[num + i]["text"]}"
     end
   elsif command == 'help' || command == '\h'
     help
