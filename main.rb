@@ -45,6 +45,7 @@ text = <<EOT
   NUM: \tShow 5 posts older than the latest by $NUM
   NUM1 NUM2: \tShow $NUM2 posts older than the latest by $NUM1
 
+  NAME(<=7): \tShow user including $NAME in name
   HASH(>=8): \tShow user including $HASH in _user_id
 
   help, \\h: \tShow help, it's me!
@@ -91,21 +92,36 @@ def show_posts(posts, users, num = 0, itr = 5)
 end
 
 
-def show_user(users, user_id)
+def user_info(user)
+user_info = <<EOT
+#{user["name"]} ---
+| #{user["description"]}
+|
+| Signed up at #{user["_created_at"]}
+| UserId: #{user["_user_id"]}
+
+EOT
+return user_info
+end
+
+def show_user_by_id(users, user_id)
   begin
     user = users.find { |elm| !elm["_user_id"].index(user_id).nil? }
   rescue => error
-    user = no_user(user_id)
+    # puts "by_id: #{error.message}"
   end
-user_info = <<EOT
-  #{user["name"]} ---
-  | #{user["description"]}
-  |
-  | Signed up at #{user["_created_at"]}
-  | UserId: #{user["_user_id"]}
+  user = no_user(user_id) if user.nil?
+  puts user_info(user)
+end
 
-EOT
-  puts user_info
+def show_user_by_name(users, user_name)
+  begin
+    user = users.find { |elm| !elm["name"].index(user_name).nil? }
+  rescue => error
+    # puts "by_name: #{error.message}"
+  end
+  user = no_user(user_name) if user.nil?
+  puts user_info(user)
 end
 
 
@@ -144,7 +160,10 @@ while true
     fetch
   elsif /(\w{8,})/ === command
     user_id = Regexp.last_match[1]
-    show_user(users, user_id)
+    show_user_by_id(users, user_id)
+  elsif /([a-zA-Zぁ-んァ-ヴ]{,7})/u === command
+    user_name = Regexp.last_match[1]
+    show_user_by_name(users, user_name)
   else
     puts "\n"
   end
