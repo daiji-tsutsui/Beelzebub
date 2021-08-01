@@ -45,6 +45,8 @@ text = <<EOT
   NUM: \tShow 5 posts older than the latest by $NUM
   NUM1 NUM2: \tShow $NUM2 posts older than the latest by $NUM1
 
+  HASH(>=8): \tShow user including $HASH in _user_id
+
   help, \\h: \tShow help, it's me!
   quit, \\q: \tQuit Beelzebub
   fetch, \\f: \tFetch the latest posts
@@ -89,6 +91,24 @@ def show_posts(posts, users, num = 0, itr = 5)
 end
 
 
+def show_user(users, user_id)
+  begin
+    user = users.find { |elm| !elm["_user_id"].index(user_id).nil? }
+  rescue => error
+    user = no_user(user_id)
+  end
+user_info = <<EOT
+  #{user["name"]} ---
+  | #{user["description"]}
+  |
+  | Signed up at #{user["_created_at"]}
+  | UserId: #{user["_user_id"]}
+
+EOT
+  puts user_info
+end
+
+
 
 
 # =============================
@@ -104,12 +124,12 @@ while true
 
   command = gets.chomp
 
-  if /(\d+)\s+(\d+)/ === command
+  if /\A(\d+)\s+(\d+)\z/ === command
     match = Regexp.last_match
     num = match[1].to_i
     itr = match[2].to_i
     show_posts(posts, users, num, itr)
-  elsif /(\d+)/ === command
+  elsif /\A(\d+)\z/ === command
     num = Regexp.last_match[1].to_i
     show_posts(posts, users, num)
   elsif command == ''
@@ -122,6 +142,9 @@ while true
   elsif command == 'fetch' || command == '\f'
     puts "\n"
     fetch
+  elsif /(\w{8,})/ === command
+    user_id = Regexp.last_match[1]
+    show_user(users, user_id)
   else
     puts "\n"
   end
