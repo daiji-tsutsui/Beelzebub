@@ -2,6 +2,7 @@ require 'uri'
 require 'net/http'
 require 'json'
 
+
 def start
 logo = <<EOT
 
@@ -17,14 +18,16 @@ EOT
 puts logo
 end
 
+
 def fetch
-  puts "Fetching posts...\n"
+  puts "Fetching posts...\n\n"
   uri = URI.parse("https://versatileapi.herokuapp.com/api/text/all")
   params = {}
   uri.query = URI.encode_www_form(params)
   res = Net::HTTP.get_response(uri)
   return JSON.parse(res.body)
 end
+
 
 def help
 text = <<EOT
@@ -34,17 +37,38 @@ text = <<EOT
   help, \\h: \tShow help, it's me!
   quit, \\q: \tQuit Beelzebub
   fetch, \\f: \tFetch the latest posts
+
 EOT
 puts text
 end
 
 
+def show_post(num, data)
+post = <<EOT
+  #{num}: #{data["text"]}
+      By #{data["_user_id"]}
+      Posted at #{data["_created_at"]}
+
+EOT
+puts post
+end
+
+def show_posts(hash, num, itr)
+  for i in 0..itr - 1
+    show_post(num + i, hash[num + i])
+  end
+end
+
+
+
+# =============================
+#    Main routine
+# =============================
 
 start
 hash = fetch
 
 while true
-  print "\n"
   print 'Enter "help" or "\h" to display available commands'
   print "\n> "
 
@@ -52,15 +76,18 @@ while true
 
   if /(\d+)/ === command
     num = Regexp.last_match[0].to_i
-    for i in 0..4
-      puts "  #{num + i}: #{hash[num + i]["text"]}"
-    end
+    show_posts(hash, num, 5)
+  elsif command == ''
+    show_posts(hash, 0, 5)
   elsif command == 'help' || command == '\h'
     help
   elsif command == 'quit' || command == '\q' || command == 'exit' || command == '\e'
     puts "\nGoodBye...\n\n"
     break
   elsif command == 'fetch' || command == '\f'
+    puts "\n"
     fetch
+  else
+    puts "\n"
   end
 end
