@@ -12,10 +12,13 @@ end
 
 def help
 text = <<EOT
-  NUMBER: \tshow 5 tweets older than the latest by $NUMBER
+  NUMBER: \tShow 5 tweets older than the latest by $NUMBER
+
+  quit, \\q: \tQuit Beelzebub
 EOT
 puts text
 end
+
 
 
 
@@ -31,9 +34,12 @@ while true
   if /(\d+)/ === command
     num = Regexp.last_match[0].to_i
     for i in 0..4
-      pp hash[num + i]["text"]
+      puts "  #{hash[num + i]["text"]}"
     end
   elsif command == 'help' || command == '\h'
     help
+  elsif command == 'quit' || command == '\q' || command == 'exit' || command == '\e'
+    puts "\nGoodBye...\n\n"
+    break
   end
 end
