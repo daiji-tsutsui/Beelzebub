@@ -14,6 +14,10 @@ def no_user(id)
   return no_user
 end
 
+def registered?(user)
+  return user["id"] != "-1"
+end
+
 
 # =============================
 #    Show posts
@@ -58,7 +62,7 @@ EOT
 return user_info
 end
 
-def show_user_by_id(users, user_id, itr = 0)
+def show_user_by_id(users, user_id, posts = [], itr = 0)
   begin
     user = users.find { |elm| !elm["_user_id"].index(user_id).nil? }
   rescue => error
@@ -66,6 +70,12 @@ def show_user_by_id(users, user_id, itr = 0)
   end
   user = no_user(user_id) if user.nil?
   puts user_info(user)
+
+  if registered?(user)
+    puts itr
+    posts_hit = posts.select { |elm| !elm["_user_id"].index(user_id).nil? }
+    show_posts(posts_hit, [user], 0, itr)
+  end
 end
 
 def show_user_by_name(users, user_name, itr = 0)

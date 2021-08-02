@@ -40,6 +40,18 @@ while true
     puts "\n"
     posts, users = fetch
 
+  elsif /(\w{8,})\s+(\d+)/ === command
+    match = Regexp.last_match
+    user_id = match[1]
+    itr = match[2].to_i
+    show_user_by_id(users, user_id, posts, itr)
+
+  elsif /([a-zA-Zぁ-んァ-ヴ]{1,7})\s+(\d+)/u === command
+    match = Regexp.last_match
+    user_name = match[1]
+    itr = match[2].to_i
+    show_user_by_name(users, user_name, itr)
+
   elsif /(\w{8,})/ === command
     user_id = Regexp.last_match[1]
     show_user_by_id(users, user_id)
@@ -47,18 +59,6 @@ while true
   elsif /([a-zA-Zぁ-んァ-ヴ]{1,7})/u === command
     user_name = Regexp.last_match[1]
     show_user_by_name(users, user_name)
-
-  elsif /(\w{8,})\s+(\d+)/ === command
-    match = Regexp.last_match
-    user_id = match[1]
-    itr = match[2].to_i
-    show_user_by_id(users, user_id, itr)
-
-  elsif /([a-zA-Zぁ-んァ-ヴ]{1,7})\s+(\d+)/u === command
-    match = Regexp.last_match
-    user_name = match[1]
-    itr = match[2].to_i
-    show_user_by_name(users, user_name, itr)
 
   else
     puts "\n"
