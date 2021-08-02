@@ -16,10 +16,12 @@ $ ruby main.rb
 ```
 を叩けば
 ```
-+=========================================+
-|                                         |
-|        B  E  E  L  Z  E  B  U  B        |
-|                                         |
+                                      |E /E
+                                      \ Z
++=================================== # ###\
+|                                   # # +##|
+|       B  E  E  L  Z  E  B  U  B    H|###/
+|                                    L /  |
 +=========================================+
  A simple viewer for 'SNS for Engineer'
 (see https://qiita.com/HawkClaws/items/599d7666f55e79ef7f56)
