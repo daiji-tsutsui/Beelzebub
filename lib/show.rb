@@ -56,7 +56,7 @@ EOT
 return user_info
 end
 
-def show_user_by_id(users, user_id)
+def show_user_by_id(users, user_id, itr = 0)
   begin
     user = users.find { |elm| !elm["_user_id"].index(user_id).nil? }
   rescue => error
@@ -66,7 +66,7 @@ def show_user_by_id(users, user_id)
   puts user_info(user)
 end
 
-def show_user_by_name(users, user_name)
+def show_user_by_name(users, user_name, itr = 0)
   users_hit = users.select { |elm| !elm["name"].index(user_name).nil? }
   users_hit = [ no_user(user_name) ] if users_hit.nil? || users_hit.empty?
 
