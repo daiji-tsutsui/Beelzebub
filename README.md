@@ -39,10 +39,10 @@ Enter "help" or "\h" to display available commands
   NUM1 NUM2:    Show $NUM2 posts $NUM1 older than the latest
 
   NAME(<=7):    Show users including $NAME in name
-  NAME NUM:     Show users including $NAME and $NUM latest posts by them
+  NAME NUM:     Show users including $NAME and $NUM latest posts by the users
 
   HASH(>=8):    Show a user including $HASH in _user_id
-  HASH NUM:     Show a user including $HASH in _user_id and $NUM latest posts by the user
+  HASH NUM:     Show a user including $HASH and $NUM latest posts by the user
 
   help, \h:     Show help, it's me!
   quit, \q:     Quit Beelzebub
