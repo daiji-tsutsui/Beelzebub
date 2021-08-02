@@ -6,9 +6,10 @@ WebAPIを叩く練習．
 ほんとうはGUIにしたかったけどとりあえず実装まで．
 
 現在はRuby環境（>=2.5.8）を想定．
-そのうちDockerでの起動もできるようにしたい．
+一応Dockerでの起動もできる．
 
-ざっくり用法の紹介．
+## 用法
+
 ```
 $ cd Beelzebub
 $ ruby main.rb
@@ -45,3 +46,28 @@ Enter "help" or "\h" to display available commands
 のようにコマンド説明が表示される．
 
 何も入力せずに`Enter`を押すと，直近から5件分のポストが表示される．
+
+## Dockerでの起動
+
+```
+$ cd Beelzebub
+$ docker-compose up -d
+$ docker attach beelzebub
+```
+を叩けば，一応ホスト側のRuby環境と関係なく使用可能．
+
+しかし，現状では難点が三つ．
+- `docker logs beelzebub`などを叩かないと，起動時のロゴが見えない．
+- `docker attach beelzebub`を叩くと何のメッセージも出ず，唐突に入力受付が開始される．
+- `Ctrl+C`でプロセスを離脱するとコンテナ自身も同時に終了する．
+
+三つ目は捉えようによっては良い仕様．
+だが，一つ目の難点は由々しき問題．
+
+一応，
+```
+$ docker-compose up -d
+$ docker exec -it beelzebub sh
+/home/app # ruby main.rb
+```
+でも起動はでき，この場合には表示されるべきロゴが完全な状態で表示されるが，手順が無骨で好ましくない．
