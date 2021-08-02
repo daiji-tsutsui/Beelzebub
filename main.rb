@@ -33,7 +33,7 @@ while true
     break
   elsif command == 'fetch' || command == '\f'
     puts "\n"
-    fetch
+    posts, users = fetch
   elsif /(\w{8,})/ === command
     user_id = Regexp.last_match[1]
     show_user_by_id(users, user_id)
