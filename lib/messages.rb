@@ -21,11 +21,14 @@ end
 def help
 text = <<EOT
 
-  NUM: \tShow 5 posts older than the latest by $NUM
-  NUM1 NUM2: \tShow $NUM2 posts older than the latest by $NUM1
+  NUM: \tShow 5 posts $NUM older than the latest by
+  NUM1 NUM2: \tShow $NUM2 posts $NUM1 older than the latest
 
-  NAME(<=7): \tShow user including $NAME in name
-  HASH(>=8): \tShow user including $HASH in _user_id
+  NAME(<=7): \tShow users including $NAME in name
+  NAME NUM: \tShow users including $NAME and $NUM latest posts by them
+
+  HASH(>=8): \tShow a user including $HASH in _user_id
+  HASH NUM: \tShow a user including $HASH in _user_id and $NUM latest posts by the user
 
   help, \\h: \tShow help, it's me!
   quit, \\q: \tQuit Beelzebub

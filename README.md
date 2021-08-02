@@ -35,15 +35,19 @@ Enter "help" or "\h" to display available commands
 ```
 > help
 
-  NUM:  Show 5 posts older than the latest by $NUM
-  NUM1 NUM2:    Show $NUM2 posts older than the latest by $NUM1
+  NUM:  Show 5 posts $NUM older than the latest by
+  NUM1 NUM2:    Show $NUM2 posts $NUM1 older than the latest
 
-  NAME(<=7):    Show user including $NAME in name
-  HASH(>=8):    Show user including $HASH in _user_id
+  NAME(<=7):    Show users including $NAME in name
+  NAME NUM:     Show users including $NAME and $NUM latest posts by them
+
+  HASH(>=8):    Show a user including $HASH in _user_id
+  HASH NUM:     Show a user including $HASH in _user_id and $NUM latest posts by the user
 
   help, \h:     Show help, it's me!
   quit, \q:     Quit Beelzebub
   fetch, \f:    Fetch the latest posts
+
 ```
 のようにコマンド説明が表示される．
 
