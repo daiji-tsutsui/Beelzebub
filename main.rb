@@ -37,7 +37,7 @@ while true
   elsif /(\w{8,})/ === command
     user_id = Regexp.last_match[1]
     show_user_by_id(users, user_id)
-  elsif /([a-zA-Zぁ-んァ-ヴ]{,7})/u === command
+  elsif /([a-zA-Zぁ-んァ-ヴ]{1,7})/u === command
     user_name = Regexp.last_match[1]
     show_user_by_name(users, user_name)
   else

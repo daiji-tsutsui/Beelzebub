@@ -67,11 +67,11 @@ def show_user_by_id(users, user_id)
 end
 
 def show_user_by_name(users, user_name)
-  begin
-    user = users.find { |elm| !elm["name"].index(user_name).nil? }
-  rescue => error
-    # puts "by_name: #{error.message}"
+  users_hit = users.select { |elm| !elm["name"].index(user_name).nil? }
+  users_hit = [ no_user(user_name) ] if users_hit.nil? || users_hit.empty?
+
+  users_hit.each do |user|
+    puts user_info(user)
   end
-  user = no_user(user_name) if user.nil?
-  puts user_info(user)
+
 end
