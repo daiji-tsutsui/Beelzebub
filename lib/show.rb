@@ -1,3 +1,4 @@
+require 'time'
 
 # =============================
 #    Dummy user
@@ -72,18 +73,22 @@ def show_user_by_id(users, user_id, posts = [], itr = 0)
   puts user_info(user)
 
   if registered?(user)
-    puts itr
     posts_hit = posts.select { |elm| !elm["_user_id"].index(user_id).nil? }
     show_posts(posts_hit, [user], 0, itr)
   end
 end
 
-def show_user_by_name(users, user_name, itr = 0)
+def show_user_by_name(users, user_name, posts = [], itr = 0)
   users_hit = users.select { |elm| !elm["name"].index(user_name).nil? }
   users_hit = [ no_user(user_name) ] if users_hit.nil? || users_hit.empty?
 
+  posts_hit = []
   users_hit.each do |user|
     puts user_info(user)
+    if registered?(user)
+      posts_hit = posts_hit + posts.select { |elm| !elm["_user_id"].index(user["_user_id"]).nil? }
+    end
   end
-
+  posts_hit.sort_by! { |post| -Time.parse(post["_created_at"]).to_i }
+  show_posts(posts_hit, users_hit, 0, itr)
 end

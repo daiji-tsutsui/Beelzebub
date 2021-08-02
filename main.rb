@@ -50,7 +50,7 @@ while true
     match = Regexp.last_match
     user_name = match[1]
     itr = match[2].to_i
-    show_user_by_name(users, user_name, itr)
+    show_user_by_name(users, user_name, posts, itr)
 
   elsif /(\w{8,})/ === command
     user_id = Regexp.last_match[1]
